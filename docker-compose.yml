@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # Banco de Dados (PostgreSQL)
+  nextcloud-db:
+    image: postgres:15-alpine
+    container_name: nextcloud-db
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=ALTERE_SUA_SENHA_DB
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud_user
+    volumes:
+      - nextcloud_db_data:/var/lib/postgresql/data
+    networks:
+      - nginx-manager_default
+
+  # Servidor do Nextcloud
+  nextcloud-app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    restart: always
+    depends_on:
+      - nextcloud-db
+    environment:
+      - POSTGRES_HOST=nextcloud-db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud_user
+      - POSTGRES_PASSWORD=ALTERE_SUA_SENHA_DB
+      - PHP_UPLOAD_LIMIT=512M
+      - PHP_MEMORY_LIMIT=512M
+      - NEXTCLOUD_UPDATE=1
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITEHOST=cloud.dinfratech.com.br
+      - OVERWRITECLIURL=https://cloud.dinfratech.com.br
+      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.dinfratech.com.br
+      
+      # Configurações de SMTP (Exemplo Gmail)
+      - MAIL_FROM_ADDRESS=seu_usuario
+      - MAIL_DOMAIN=gmail.com
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_NAME=seu_email@gmail.com
+      - SMTP_PASSWORD=sua_app_password_google
+      - SMTP_AUTHTYPE=LOGIN
+      - SMTP_SECURE=tls
+      
+    volumes:
+      - nextcloud_data:/var/www/html
+    networks:
+      - nginx-manager_default
+
+  # Servidor de Documentos OnlyOffice
+  onlyoffice-server:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice-server
+    restart: always
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=sua_chave_secreta_aqui
+    volumes:
+      - onlyoffice_data:/var/www/onlyoffice/Data
+      - onlyoffice_logs:/var/log/onlyoffice
+    networks:
+      - nginx-manager_default
+
+networks:
+  nginx-manager_default:
+    external: true
+
+volumes:
+  nextcloud_db_data:
+  nextcloud_data:
+  onlyoffice_data:
+  onlyoffice_logs:
