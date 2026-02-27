@@ -18,3 +18,10 @@ O deploy está configurado para o domínio `cloud.seudominio.com.br`. Para utili
 ## 📌 Notas importantes
 * **SSL/TLS**: Recomenda-se o uso de certificados via Nginx Proxy Manager.
 * **Websockets**: No Proxy, ative o suporte a Websockets para o funcionamento correto do OnlyOffice.
+
+## 🔗 Referências Oficiais
+* [Manual de Integração ONLYOFFICE](https://helpcenter.onlyoffice.com/integration/nextcloud.aspx)
+* [Repositório do Conector no GitHub](https://github.com/ONLYOFFICE/onlyoffice-nextcloud)
+
+---
+Desenvolvido por [Diego Soares](https://www.linkedin.com/in/ddiegosoares/) - Focado em infraestrutura ágil e colaborativa.
