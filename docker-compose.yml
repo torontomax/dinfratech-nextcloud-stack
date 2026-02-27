@@ -32,8 +32,8 @@ services:
       - NEXTCLOUD_UPDATE=1
       - OVERWRITEPROTOCOL=https
       - OVERWRITEHOST=cloud.dinfratech.com.br
-      - OVERWRITECLIURL=https://cloud.dinfratech.com.br
-      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.dinfratech.com.br
+      - OVERWRITECLIURL=https://cloud.seudominio.com.br
+      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.seudominio.com.br
       
       # Configurações de SMTP (Exemplo Gmail)
       - MAIL_FROM_ADDRESS=seu_usuario
